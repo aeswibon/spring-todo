@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS todo (
     description VARCHAR(255) NOT NULL,
     status BOOLEAN,
     project_uuid UUID,
-    createdAt TIMESTAMP NOT NULL,
-    updatedAt TIMESTAMP NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
     FOREIGN KEY (project_uuid) REFERENCES project(uuid)
 );
 

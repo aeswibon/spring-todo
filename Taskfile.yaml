@@ -12,7 +12,7 @@ tasks:
   down:
     desc: Stops docker compose
     cmds:
-      - docker compose down
+      - docker compose down --volumes
   start:
     desc: Starts the spring boot server
     cmds:

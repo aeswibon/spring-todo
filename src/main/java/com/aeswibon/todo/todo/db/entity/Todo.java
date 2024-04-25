@@ -4,13 +4,13 @@ import com.aeswibon.todo.project.db.entity.Project;
 import com.aeswibon.todo.shared.entity.IEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -36,10 +36,10 @@ public class Todo implements IEntity {
     @ToString.Exclude
     private Project project;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private ZonedDateTime createdAt;
 
-    @Column(nullable = false)
+    @UpdateTimestamp
     private ZonedDateTime updatedAt;
 
 }

@@ -11,6 +11,7 @@ import com.aeswibon.todo.shared.dto.SuccessResponseDTO;
 import com.aeswibon.todo.shared.exception.AppException;
 import com.aeswibon.todo.shared.utils.ResponseHelper;
 import com.aeswibon.todo.shared.utils.Routes;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ProjectController {
 
     @GetMapping
     public ResponseEntity<SuccessResponseDTO<ProjectsResponseDTO>> findAllProjects(
-            @RequestParam PaginationFilterSortDTO paginationFilterSortDTO
+            @Valid PaginationFilterSortDTO paginationFilterSortDTO
     ) throws AppException {
         ProjectsResponseDTO result = projectService.findAllProjects(paginationFilterSortDTO);
         return responseHelper.getSuccessResponse("project", result);

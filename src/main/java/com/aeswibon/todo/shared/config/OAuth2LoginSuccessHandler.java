@@ -38,7 +38,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         DefaultOAuth2User updatedOAuth2User = new DefaultOAuth2User(
                 List.of(new SimpleGrantedAuthority(user.getRole().name())),
                 defaultOAuth2User.getAttributes(),
-                defaultOAuth2User.getName()
+                "name"
         );
         Authentication auth = new OAuth2AuthenticationToken(updatedOAuth2User, defaultOAuth2User.getAuthorities(), defaultOAuth2User.getName());
         SecurityContextHolder.getContext().setAuthentication(auth);

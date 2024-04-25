@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: Todo
+  main:
+    banner-mode: off
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/todo}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath*:db/changelog/db.changelog.yml
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_CLIENT_SECRET}
+server:
+  port: ${PORT:8080}
+ENV: dev
+logging:
+  pattern:
+    console: log_level=%p timestamp=%d{yyyy-MM-dd'T'HH:mm:ss.SSS} product=todo service=todo service_name=todo environment=${ENV} %m%n
+  level:
+    org.springframework.web: INFO
+    org.hibernate.SQL: INFO

@@ -1,0 +1,23 @@
+version: "3"
+silent: true
+tasks:
+  default:
+    desc: Lists all commands
+    cmds:
+      - task --list-all
+  up:
+    desc: Starts docker compose    
+    cmds:
+      - docker compose up -d
+  down:
+    desc: Stops docker compose
+    cmds:
+      - docker compose down
+  start:
+    desc: Starts the spring boot server
+    cmds:
+      - mvn spring-boot:run
+  dev:
+    desc: Starts dev server
+    cmds:
+      - mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8787 -Dserver.port=8080"

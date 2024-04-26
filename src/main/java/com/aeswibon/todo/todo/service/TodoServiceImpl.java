@@ -11,11 +11,16 @@ import com.aeswibon.todo.todo.dto.*;
 import com.aeswibon.todo.shared.adapter.AppExceptionAdapter;
 import com.aeswibon.todo.shared.dto.MessageResponseDTO;
 import com.aeswibon.todo.shared.exception.AppException;
+import com.aeswibon.todo.user.db.entity.User;
+import com.aeswibon.todo.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,11 +33,11 @@ import java.util.UUID;
 @Service
 public class TodoServiceImpl implements TodoService {
 
-    @Autowired
     private TodoRepository todoRepo;
+    private UserService userService;
 
     private Todo _findTodo(String todoId) throws AppException {
-        Optional<Todo> todo = todoRepo.findById(UUID.fromString(todoId));
+        Optional<Todo> todo = todoRepo.findByUuidAndProject_User(UUID.fromString(todoId), userService.findUser());
         if (todo.isEmpty()) {
             throw AppExceptionAdapter.getExceptionObjectFrom(ErrorConstants.RESOURCE_NOT_FOUND);
         }
@@ -41,7 +46,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public MessageResponseDTO createTodo(TodoCreateDTO request) throws AppException {
-        Optional<Todo> todo = todoRepo.findByDescription(request.getDescription());
+        Optional<Todo> todo = todoRepo.findByDescriptionAndProject_User(request.getDescription(), userService.findUser());
         if (todo.isPresent()) {
             throw AppExceptionAdapter.getExceptionObjectFrom(ErrorConstants.RESOURCE_ALREADY_EXISTS);
         }
@@ -72,7 +77,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodosResponseDTO findAllTodos(PaginationFilterSortDTO data) throws AppException {
         Pageable paging = PagingHelper.getPagingObject(data.getPageNumber(), data.getPageSize(), data.getSortBy());
-        Page<Todo> query = todoRepo.findAll(paging);
+        Page<Todo> query = todoRepo.findAllByProject_User(userService.findUser(), paging);
         List<TodoDTO> todos = new ArrayList<>();
         query.forEach(todo -> todos.add(TodoAdapter.getTodo(todo)));
         return TodosResponseDTO.builder().count((long) todos.size()).todos(todos).build();

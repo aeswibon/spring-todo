@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Routes.Project)
 public class ProjectController {
 
-    @Autowired
     private ProjectService projectService;
-
-    @Autowired
     private ResponseHelper responseHelper;
 
     @GetMapping

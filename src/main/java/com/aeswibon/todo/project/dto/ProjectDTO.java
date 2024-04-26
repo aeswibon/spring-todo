@@ -1,6 +1,5 @@
 package com.aeswibon.todo.project.dto;
 
-import com.aeswibon.todo.todo.db.entity.Todo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +14,8 @@ import java.util.List;
 public class ProjectDTO {
     String uuid;
     String title;
-    List<Todo> todos;
+    Integer pending;
+    Integer completed;
     String createdBy;
     String updatedBy;
 }

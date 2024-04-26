@@ -8,6 +8,13 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ErrorConstants implements IError {
+    UNAUTHORIZED(
+            "auth",
+            "unauthorized",
+            "You are not authorized to access this resource",
+            HttpStatus.UNAUTHORIZED.value()
+    ),
+
     RESOURCE_NOT_FOUND(
             "resource",
             "invalid_uuid",

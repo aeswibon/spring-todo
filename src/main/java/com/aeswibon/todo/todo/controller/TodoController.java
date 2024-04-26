@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Routes.Todo)
 public class TodoController {
 
-    @Autowired
     private TodoService todoService;
-
-    @Autowired
     private ResponseHelper responseHelper;
 
     @GetMapping
